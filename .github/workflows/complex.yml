@@ -29,7 +29,9 @@ jobs:
     needs: [ubuntu, windows, macos]
     runs-on: ubuntu-latest
     steps:
-      - run: echo Hello Everyone!
-      - run: date
-      - run: df -h
+      - name: Run Multi commands
+        run: |
+        echo Hello Everyone!
+        date
+        df -h
 
