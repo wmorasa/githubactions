@@ -34,4 +34,5 @@ jobs:
       - run: echo "Hello Everyone!"
       - run: date
       - run: df -h
+      - run: env
 
