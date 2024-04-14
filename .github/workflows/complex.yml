@@ -30,8 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Multi commands
-        run: |
-        echo Hello Everyone!
-        date
-        df -h
+        run: echo Hello Everyone!
+        run: date
+        run: df -h
 
