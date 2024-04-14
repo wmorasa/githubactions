@@ -1,4 +1,4 @@
-name: Complex
+name: Show.Environment
 on:
   workflow_dispatch:
 
@@ -24,8 +24,8 @@ jobs:
       - name: Say MacOS
         run: echo MacOS
 
-  depends:
-    name: Depends Step
+  show_env:
+    name: Show Environment Step
     needs: [ubuntu, windows, macos]
     runs-on: ubuntu-latest
     steps:
