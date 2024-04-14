@@ -1,0 +1,35 @@
+name: Complex
+on:
+  workflow_dispatch:
+
+jobs:
+  ubuntu:
+    name: Ubuntu Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Ubuntu
+        run: echo Ubuntu
+
+  windows:
+    name: Windows Check
+    runs-on: windows-latest
+    steps:
+      - name: Say Windows
+        run: echo Windows
+
+  macos:
+    name: MacOS Check
+    runs-on: macos-latest
+    steps:
+      - name: Say MacOS
+        run: echo MacOS
+
+  depends:
+    name: Depends Step
+    needs: [ubuntu, windows, macos]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Hello Everyone!
+      - run: date
+      - run: df -h
+
