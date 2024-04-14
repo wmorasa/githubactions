@@ -24,7 +24,7 @@ jobs:
 #      - name: Say MacOS
 #        run: echo MacOS
 
-  tag.branch:
+  tag_branch:
     name: Tag.
     needs: ubuntu
     runs-on: ubuntu-latest
