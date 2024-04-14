@@ -10,13 +10,27 @@ jobs:
       - name: Say Ubuntu
         run: echo Ubuntu
 
-  tag_branch:
+#  windows:
+#    name: Windows Check
+#    runs-on: windows-latest
+#    steps:
+#      - name: Say Windows
+#        run: echo Windows
+#
+#  macos:
+#    name: MacOS Check
+#    runs-on: macos-latest
+#    steps:
+#      - name: Say MacOS
+#        run: echo MacOS
+
+  tag.branch:
     name: Tag.
     needs: ubuntu
     runs-on: ubuntu-latest
     steps:
       - name:  Git checkout
-        run: actions/checkout@v1
+        run: actions/checkout@v2
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}
 
