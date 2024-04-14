@@ -1,0 +1,22 @@
+name: Tag.Branch
+on:
+  workflow_dispatch:
+
+jobs:
+  ubuntu:
+    name: Ubuntu Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Ubuntu
+        run: echo Ubuntu
+
+  tag_branch:
+    name: Tag.
+    needs: ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - name:  Git checkout
+        run: actions/checkout@v1
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}
+
