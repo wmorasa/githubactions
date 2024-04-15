@@ -37,10 +37,15 @@ jobs:
           branchName=$(echo ${{github.ref_name}})
           echo "getBranchName=$branchName">> $GITHUB_OUTPUT
 
-
       - name: listTag
-        # run: git describe --tags `git rev-list --tags --max-count=1`    
-        run: git tag -l 
+        run:  git describe --tags `git rev-list --tags --max-count=1`     
+
+      - name: getTag
+        id: getTag
+        env: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |      
+          echo "branchName is : ${{steps.getBranchName.outputs.getBranchName}}"
 
       - name: createTag
         id: createTag
@@ -64,3 +69,7 @@ jobs:
           fi
           NewTag="${{steps.getBranchName.outputs.getBranchName}}-$( echo $VersionNum | awk '{ printf "%04s", $1 }' | sed 's/ /0/g' )"
           echo "NewTag: ${NewTag}"
+          git config --global user.name "${{github.actor}}"
+          git config --global user.email "${{github.actor}}@users.noreply.github.com" 
+          git tag -a "$NewTag" -m "tag name is $NewTag"
+          git push origin $NewTag 
