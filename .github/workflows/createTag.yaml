@@ -51,8 +51,16 @@ jobs:
           echo "TagList=$( git tag -l )" >> $GITHUB_OUTPUT
 
           echo "Tag List=${{steps.createTag.outputs.TagList}}"
-          #tags=$(git tag -l | grep 'DEVELOP' | sort)
-          #echo "hello $tags"
+          TagCount=$(echo ${{steps.createTag.outputs.TagList}} | grep -c '${{steps.getBranchName.outputs.getBranchName}}')
+          echo "TagCount ${LatestTagCount}"
+
+          if [ ${TagCount} -eq 0 ]
+          then
+             VersionNum=1
+          else
+             TagLatest=$(echo ${{steps.createTag.outputs.TagList}} | grep '${{steps.getBranchName.outputs.getBranchName}}' | sort | tail -1 )
+          fi
+          NewTag=${{steps.getBranchName.outputs.getBranchName}}"-"$( echo $VersionNum | awk '{ print "%0000s", $1 } )
 
           #git show-ref --tags | grep -c "${{steps.getBranchName.outputs.getBranchName}}"
 
