@@ -42,7 +42,9 @@ jobs:
 
 
       - name: listTag
-        run:  git describe --tags `git rev-list --tags --max-count=1`     
+        run: |      
+          git tag -l
+   
 
       - name: getTag
         id: getTag
