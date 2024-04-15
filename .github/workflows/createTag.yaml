@@ -1,0 +1,60 @@
+name: CreateTag
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      tagName:
+        required: true
+        type: string  
+      version:
+        required: false
+      
+  push:
+    # branches: ['main']
+      
+env:
+  ARTIFACTORY_REGISTRY: https://bpd01artifactory.glideportal.transurban.com.au/artifactory
+  GITHUB_CONTEXT: ${{toJson(github)}}
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  CreateTag:
+    runs-on: ubuntu-latest
+    # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
+    permissions:
+      contents: write
+      packages: write
+ 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+
+      - name: getBranchName
+        id: getBranchName
+        run: |   
+          branchName=$(echo ${{github.ref_name}})
+          echo "getBranchName=$branchName">> $GITHUB_OUTPUT
+
+
+      - name: listTag
+        run:  git describe --tags `git rev-list --tags --max-count=1`     
+
+      - name: createTag
+        id: createTag
+        env: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |      
+          echo "${{steps.getBranchName.outputs.getBranchName}}"
+          
+          git show-ref --tags | grep -c "${{steps.getBranchName.outputs.getBranchName}}"
+        
+          # tagValue=$(git show-ref --tags)
+
+          if [[ -z "$tagValue" ]]; then
+            createTaG=${{steps.getBranchName.outputs.getBranchName}}-0001
+          else
+            createTag=$(git describe --tags --abbrev=0 | awk -F. '{OFS="-"; $NF+=1; print $0}')
+          fi
+          echo "$createTag"
