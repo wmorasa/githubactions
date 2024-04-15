@@ -50,7 +50,7 @@ jobs:
           echo "${{steps.getBranchName.outputs.getBranchName}}"
           echo "TagList=$( git tag -l )" >> $GITHUB_OUTPUT
 
-          echo ${{steps.createTag.outputs.TagList}}
+          echo "Tag List=${{steps.createTag.outputs.TagList}}"
           #tags=$(git tag -l | grep 'DEVELOP' | sort)
           #echo "hello $tags"
 
