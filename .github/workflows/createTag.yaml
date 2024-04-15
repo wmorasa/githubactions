@@ -40,7 +40,7 @@ jobs:
 
       - name: listTag
         # run: git describe --tags `git rev-list --tags --max-count=1`    
-        run: git tags -l
+        run: git tag -l
 
       - name: createTag
         id: createTag
