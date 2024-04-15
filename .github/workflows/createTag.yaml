@@ -51,7 +51,7 @@ jobs:
           echo "TagList=$( git tag -l )" >> $GITHUB_OUTPUT
 
           echo "Tag List=${{steps.createTag.outputs.TagList}}"
-          TagCount=$(echo ${{steps.createTag.outputs.TagList}} | grep -c '${{steps.getBranchName.outputs.getBranchName}}')
+          TagCount=$(echo ${{steps.createTag.outputs.TagList}} | grep -c ${{steps.getBranchName.outputs.getBranchName}})
           echo "TagCount ${LatestTagCount}"
 
           if [ ${TagCount} -eq 0 ]
