@@ -48,6 +48,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
         run: |      
           echo "${{steps.getBranchName.outputs.getBranchName}}"
-          tags=$(git tag -l)
-          echo "$tags" >> /tmp/tmp.out
-          cat /tmp/tmp.out | grep -v "^$" | wc -l
+          #tags=$(git tag -l)
+          #echo "$tags" 
+          git tag -l >> /tmp/tmp.out
+          cat /tmp/tmp.out | grep "^$" | wc -l 
+          cat /tmp/tmp.out | grep "${{steps.getBranchName.outputs.getBranchName}}" | wc -l 
