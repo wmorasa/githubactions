@@ -38,7 +38,9 @@ jobs:
           echo "getBranchName=$branchName">> $GITHUB_OUTPUT
 
       - name: listTag
-        run:  git describe --tags `git rev-list --tags --max-count=1`     
+        run:  |
+		  set +e 
+		  git describe --tags `git rev-list --tags --max-count=1`     
 
       - name: getTag
         id: getTag
@@ -73,3 +75,118 @@ jobs:
           git config --global user.email "${{github.actor}}@users.noreply.github.com" 
           git tag -a "$NewTag" -m "tag name is $NewTag"
           git push origin $NewTag 
+
+
+      # - name: createTag
+      #   id: createTag
+      #   run: |      
+      #     tagValue=${{steps.getBranchName.outputs.getBranchName}}
+      #     echo $tagValue
+
+      #     # if [[ -z "$patchVersion" ]]; then
+      #     #   patchVersion=0001
+      #     # else
+      #     #   patchVersion=$((patchVersion + 1))
+      #     #   patchVersion=$(echo "$tagValue | awk -F. '{print $3}')
+      #     #   addTag="$NEW_TAG-${patchVersion}"
+      #     # fi
+
+      #     if [[ -z "$tagValue" ]]; then
+      #       createTag=$tagValue-0001
+      #     else
+      #       createTag=$(git describe --tags --abbrev=0 | awk -F. '{OFS="-"; $NF+=1; print $0}') >> $GITHUB_OUTPUT
+      #       echo "$createTag"
+      #     fi
+            
+      #     if [[ "$finalTag" == R*.*-* ]]; then
+      #         minorVersion=$(echo "$createTag" | awk -F. '{print $2}')
+      #         patchVersion=$(echo "$createTag" | awk -F. '{print $3}')
+      #         NEW_TAG="R${majorVersion}.${minorVersion}-${patchVersion}"
+      #     fi
+      #     echo "finalTag is $NEW_TAG"
+         
+
+##------------------------Generate Tag if not taken via input-----------------------------------------------##
+## Get the branch
+## Get tags with branchname as prefix
+## Get the latest version number - 0001 or 0002
+## if no tag, start with zero
+## else append to the version with +1 
+## Create Tag from branch
+
+            
+
+          # idenitfy patchverrsion and increment if found or create new if not found
+          # # Increment the patch version by 1
+          # patchVersion=0001
+          # patchVersion=$((patchVersion + 1))
+
+          # if [[ -z "$patchVersion" ]]; then
+          #   patchVersion=0001
+          #   else
+          #   patchVersion=$((patchVersion + 1))
+          #     patchVersion=$(echo "$latestTag" | awk -F. '{print $3}')
+          #     addTag="$NEW_TAG-${patchVersion}"
+          # fi
+    
+
+## Take branchName and create tag out of it. 
+
+      # - name: getTags
+      #   id: getTags
+      #   run: |       
+          ## echo tag name and add git config and then command to create tag here
+          # echo "$latestTag"
+          # echo "$NEW_TAG"  
+          # git config --global user.name "${{github.actor}}"
+          # git config --global user.email "${{github.actor}}@users.noreply.github.com" 
+          # git fetch --tags
+          # "echo latest release: '${{ steps.getTags.outputs.data }}'"  
+
+
+####------------------------Extras-----------------------------------------------##  
+
+          # tagValue=$(git show-ref --tags) >> $GITHUB_OUTPUT
+          # tagValue=${{steps.getBranchName.outputs.getBranchName}}
+          # echo $tagValue
+          # if [[ -z "$tagValue" ]]; then
+          #   createTaG=$tagValue-0001
+          # else
+          #   createTag=$(git describe --tags --abbrev=0 | awk -F. '{OFS="-"; $NF+=1; print $0}') >> $GITHUB_OUTPUT
+          #   echo "$createTag"
+          # fi
+            
+          # if [[ "$finalTag" == R*.*-* ]]; then
+          #     minorVersion=$(echo "$createTag" | awk -F. '{print $2}')
+          #     patchVersion=$(echo "$createTag" | awk -F. '{print $3}')
+          #     NEW_TAG="R${majorVersion}.${minorVersion}-${patchVersion}"
+          # fi
+          # echo "NEW_TAG is $NEW_TAG"
+
+        # - name: createTag
+        # id: createTag
+        # run: |      
+        #   tagValue=${{steps.getBranchName.outputs.getBranchName}}
+        #   echo $tagValue
+
+        #   # if [[ -z "$patchVersion" ]]; then
+        #   #   patchVersion=0001
+        #   # else
+        #   #   patchVersion=$((patchVersion + 1))
+        #   #   patchVersion=$(echo "$tagValue | awk -F. '{print $3}')
+        #   #   addTag="$NEW_TAG-${patchVersion}"
+        #   # fi
+
+        #   if [[ -z "$tagValue" ]]; then
+        #     createTag=$tagValue-0001
+        #   else
+        #     createTag=$(git describe --tags --abbrev=0 | awk -F. '{OFS="-"; $NF+=1; print $0}') >> $GITHUB_OUTPUT
+        #     echo "$createTag"
+        #   fi
+            
+        #   if [[ "$finalTag" == R*.*-* ]]; then
+        #       minorVersion=$(echo "$createTag" | awk -F. '{print $2}')
+        #       patchVersion=$(echo "$createTag" | awk -F. '{print $3}')
+        #       NEW_TAG="R${majorVersion}.${minorVersion}-${patchVersion}"
+        #   fi
+        #   echo "finalTag is $NEW_TAG"
