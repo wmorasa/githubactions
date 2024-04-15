@@ -62,5 +62,7 @@ jobs:
           else
              echo Nothing yet
           fi
-          NewTag="${{steps.getBranchName.outputs.getBranchName}}-$( echo $VersionNum | awk '{ printf "%04s", $1 }' )"
+          echo $VersionNum | awk '{ printf "%04s", $1 }' > /tmp/tmp.out
+          cat /tmp/tmp.out
+          NewTag="${{steps.getBranchName.outputs.getBranchName}}-"
           echo "NewTag: ${NewTag}"
