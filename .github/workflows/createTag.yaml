@@ -34,13 +34,15 @@ jobs:
       - name: getBranchName
         id: getBranchName
         run: |   
+          # branchName=$(echo ${{github.ref_name}})
           branchName=$(echo ${{github.ref_name}})
-          echo "getBranchName=$branchName">> $GITHUB_OUTPUT
+          tagPrefix=$(echo ${branchName//"release/"/})
+          echo "tagPrefix is : ${tagPrefix}"
+          echo "getBranchName=$tagPrefix">> $GITHUB_OUTPUT
+
 
       - name: listTag
-        run: |
-		  set +e 
-		  git describe --tags `git rev-list --tags --max-count=1`     
+        run:  git describe --tags `git rev-list --tags --max-count=1`     
 
       - name: getTag
         id: getTag
@@ -58,7 +60,8 @@ jobs:
           #tags=$(git tag -l)
           #echo "$tags" 
           git tag -l >> /tmp/tmp.out
-          cat /tmp/tmp.out | grep "^$" | wc -l 
+          cat /tmp/tmp.out
+          # cat /tmp/tmp.out | grep "^$" | wc -l 
           TagCount=$(cat /tmp/tmp.out | grep "${{steps.getBranchName.outputs.getBranchName}}" | wc -l)
 
           echo "TagCount ${TagCount}"
@@ -67,44 +70,17 @@ jobs:
           then
              VersionNum=1
           else
-             echo Nothing yet
+            LastVersion=$(cat /tmp/tmp.out | grep "${{steps.getBranchName.outputs.getBranchName}}" | sort | tail -1 | cut -f 2 -d"-" )
+            VersionNum=$(( $LastVersion + 1))
           fi
+
           NewTag="${{steps.getBranchName.outputs.getBranchName}}-$( echo $VersionNum | awk '{ printf "%04s", $1 }' | sed 's/ /0/g' )"
           echo "NewTag: ${NewTag}"
+
           git config --global user.name "${{github.actor}}"
           git config --global user.email "${{github.actor}}@users.noreply.github.com" 
           git tag -a "$NewTag" -m "tag name is $NewTag"
-          git push origin $NewTag 
-
-
-      # - name: createTag
-      #   id: createTag
-      #   run: |      
-      #     tagValue=${{steps.getBranchName.outputs.getBranchName}}
-      #     echo $tagValue
-
-      #     # if [[ -z "$patchVersion" ]]; then
-      #     #   patchVersion=0001
-      #     # else
-      #     #   patchVersion=$((patchVersion + 1))
-      #     #   patchVersion=$(echo "$tagValue | awk -F. '{print $3}')
-      #     #   addTag="$NEW_TAG-${patchVersion}"
-      #     # fi
-
-      #     if [[ -z "$tagValue" ]]; then
-      #       createTag=$tagValue-0001
-      #     else
-      #       createTag=$(git describe --tags --abbrev=0 | awk -F. '{OFS="-"; $NF+=1; print $0}') >> $GITHUB_OUTPUT
-      #       echo "$createTag"
-      #     fi
-            
-      #     if [[ "$finalTag" == R*.*-* ]]; then
-      #         minorVersion=$(echo "$createTag" | awk -F. '{print $2}')
-      #         patchVersion=$(echo "$createTag" | awk -F. '{print $3}')
-      #         NEW_TAG="R${majorVersion}.${minorVersion}-${patchVersion}"
-      #     fi
-      #     echo "finalTag is $NEW_TAG"
-         
+          #git push origin $NewTag 
 
 ##------------------------Generate Tag if not taken via input-----------------------------------------------##
 ## Get the branch
@@ -113,35 +89,6 @@ jobs:
 ## if no tag, start with zero
 ## else append to the version with +1 
 ## Create Tag from branch
-
-            
-
-          # idenitfy patchverrsion and increment if found or create new if not found
-          # # Increment the patch version by 1
-          # patchVersion=0001
-          # patchVersion=$((patchVersion + 1))
-
-          # if [[ -z "$patchVersion" ]]; then
-          #   patchVersion=0001
-          #   else
-          #   patchVersion=$((patchVersion + 1))
-          #     patchVersion=$(echo "$latestTag" | awk -F. '{print $3}')
-          #     addTag="$NEW_TAG-${patchVersion}"
-          # fi
-    
-
-## Take branchName and create tag out of it. 
-
-      # - name: getTags
-      #   id: getTags
-      #   run: |       
-          ## echo tag name and add git config and then command to create tag here
-          # echo "$latestTag"
-          # echo "$NEW_TAG"  
-          # git config --global user.name "${{github.actor}}"
-          # git config --global user.email "${{github.actor}}@users.noreply.github.com" 
-          # git fetch --tags
-          # "echo latest release: '${{ steps.getTags.outputs.data }}'"  
 
 
 ####------------------------Extras-----------------------------------------------##  
@@ -190,3 +137,7 @@ jobs:
         #       NEW_TAG="R${majorVersion}.${minorVersion}-${patchVersion}"
         #   fi
         #   echo "finalTag is $NEW_TAG"
+
+
+####------------------------Extras-----------------------------------------------##  
+####------------------------Extras-----------------------------------------------##          
