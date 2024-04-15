@@ -48,7 +48,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
         run: |      
           echo "${{steps.getBranchName.outputs.getBranchName}}"
-          git fetch --tags
+          #git fetch --tags
           tags=$(git tag -l | grep 'DEVELOP' | sort)
           echo "$tags"
 
