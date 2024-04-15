@@ -48,5 +48,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
         run: |      
           echo "${{steps.getBranchName.outputs.getBranchName}}"
-          tags=$(git describe --tags --all)
-          echo "$tags"
+          tags=$(git tag -l)
+          echo "$tags" >> /tmp/tmp.out
+          cat /tmp/tmp.out
