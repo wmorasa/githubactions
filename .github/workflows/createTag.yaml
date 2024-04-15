@@ -50,4 +50,4 @@ jobs:
           echo "${{steps.getBranchName.outputs.getBranchName}}"
           tags=$(git tag -l)
           echo "$tags" >> /tmp/tmp.out
-          cat /tmp/tmp.out | wc -l
+          cat /tmp/tmp.out | grep -v "^$" | wc -l
