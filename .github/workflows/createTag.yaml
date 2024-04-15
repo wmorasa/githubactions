@@ -38,7 +38,7 @@ jobs:
           echo "getBranchName=$branchName">> $GITHUB_OUTPUT
 
       - name: listTag
-        run:  |
+        run: |
 		  set +e 
 		  git describe --tags `git rev-list --tags --max-count=1`     
 
