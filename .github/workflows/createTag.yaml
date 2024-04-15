@@ -49,8 +49,8 @@ jobs:
         run: |      
           echo "${{steps.getBranchName.outputs.getBranchName}}"
           #git fetch --tags
-          tags=$(git tag -l | grep 'DEVELOP' | sort)
-          echo "$tags"
+          #tags=$(git tag -l | grep 'DEVELOP' | sort)
+          echo "hello $tags"
 
           #git show-ref --tags | grep -c "${{steps.getBranchName.outputs.getBranchName}}"
         
