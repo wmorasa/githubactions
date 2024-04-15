@@ -57,14 +57,15 @@ jobs:
         id: createTag
         env: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
-        run: |      
+        run: | 
+          LOGFILE=/tmp/tmp.$$.out     
           echo "${{steps.getBranchName.outputs.getBranchName}}"
           #tags=$(git tag -l)
           #echo "$tags" 
-          git tag -l >> /tmp/tmp.out
-          cat /tmp/tmp.out
+          git tag -l >> ${LOGFILE}
+          cat ${LOGFILE}
           # cat /tmp/tmp.out | grep "^$" | wc -l 
-          TagCount=$(cat /tmp/tmp.out | grep "${{steps.getBranchName.outputs.getBranchName}}" | wc -l)
+          TagCount=$(cat ${LOGFILE} | grep "${{steps.getBranchName.outputs.getBranchName}}" | wc -l)
 
           echo "TagCount ${TagCount}"
 
