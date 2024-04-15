@@ -52,4 +52,15 @@ jobs:
           #echo "$tags" 
           git tag -l >> /tmp/tmp.out
           cat /tmp/tmp.out | grep "^$" | wc -l 
-          cat /tmp/tmp.out | grep "${{steps.getBranchName.outputs.getBranchName}}" | wc -l 
+          TagCount=$(cat /tmp/tmp.out | grep "${{steps.getBranchName.outputs.getBranchName}}" | wc -l)
+
+          echo "TagCount ${LatestTagCount}"
+
+          if [ ${TagCount} -eq 0 ]
+          then
+             VersionNum=1
+          else
+             echo Nothing yet
+          fi
+          NewTag=${{steps.getBranchName.outputs.getBranchName}}"-"$( echo $VersionNum | awk '{ print "%0000s", $1 } )
+          echo "NewTag: ${NewTag}"
