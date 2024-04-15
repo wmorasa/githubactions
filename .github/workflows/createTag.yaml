@@ -40,7 +40,7 @@ jobs:
 
       - name: listTag
         # run: git describe --tags `git rev-list --tags --max-count=1`    
-        run: git tag -l
+        run: git tag -l | grep -i "${{steps.getBranchName.outputs.getBranchName}}"
 
       - name: createTag
         id: createTag
