@@ -47,8 +47,8 @@ jobs:
           echo "test: ${PackageName}"
           gh release create "${PackageName}" \
             --repo="$GITHUB_REPOSITORY" \
-            --title="${PackageName}" \
-            --generate-notes
+            --title="${PackageName}" #\
+          # --generate-notes
 
       # - name: createPackage
       #   id: createPackage
