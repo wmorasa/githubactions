@@ -31,8 +31,6 @@ jobs:
         with: 
           fetch-depth: 0
           ref: ${{ github.event.inputs.tagName }}
-        run: | 
-          ls -l
 
       - name: listTag
         run: |      
