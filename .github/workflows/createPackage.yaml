@@ -31,6 +31,8 @@ jobs:
         with: 
           fetch-depth: 0
           ref: ${{ github.event.inputs.tagName }}
+        run: | 
+          ls -l
 
       - name: listTag
         run: |      
@@ -41,7 +43,7 @@ jobs:
         env: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
         run: |      
-          echo "branchName is : ${{steps.getBranchName.outputs.getBranchName}}"
+          echo "branchName is : ${{ github.event.inputs.tagName }}"
 
       - name: createPackage
         id: createPackage
