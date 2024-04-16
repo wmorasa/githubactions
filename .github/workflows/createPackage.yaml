@@ -31,7 +31,10 @@ jobs:
         with: 
           fetch-depth: 0
           ref: ${{ github.event.inputs.tagName }}
-
+        run: | 
+          ls -l
+          pwd
+          
       - name: listTag
         run: |      
           git tag -l
