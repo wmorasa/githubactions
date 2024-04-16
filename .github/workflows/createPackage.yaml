@@ -40,24 +40,29 @@ jobs:
         id: showBranch
         env: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
         run: |      
           echo "branchName is : ${{ github.event.inputs.tagName }}"
+          gh release create "$tag" \
+            --repo="$GITHUB_REPOSITORY" \
+            --title="${GITHUB_REPOSITORY#*/}-${tag}" \
+            --generate-notes
 
-      - name: createPackage
-        id: createPackage
-        env: 
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-        run: | 
-          ls -l
-          pwd
+      # - name: createPackage
+      #   id: createPackage
+      #   env: 
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #   run: | 
+      #     ls -l
+      #     pwd
 
-      - name: Zip directory
-        run: |
-          cd ${{ github.workspace }}
-          zip -r output.zip .
+      # - name: Zip directory
+      #   run: |
+      #     cd ${{ github.workspace }}
+      #     zip -r output.zip .
       
-      - name: Upload zip
-        uses: actions/upload-artifact@v2
-        with:
-          name: my-artifact
-          path: ${{ github.workspace }}/output.zip
+      # - name: Upload zip
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: my-artifact
+      #     path: ${{ github.workspace }}/output.zip
