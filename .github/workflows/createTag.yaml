@@ -63,7 +63,7 @@ jobs:
           #tags=$(git tag -l)
           #echo "$tags" 
           git tag -l >> ${LOGFILE}
-          # cat ${LOGFILE}
+          cat ${LOGFILE}
           # cat /tmp/tmp.out | grep "^$" | wc -l 
           TagCount=$(cat ${LOGFILE} | grep "${{steps.getBranchName.outputs.getBranchName}}" | wc -l)
 
