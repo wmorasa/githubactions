@@ -41,12 +41,13 @@ jobs:
         env: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.inputs.tagName }}
+          PackageName: "${GITHUB_REPOSITORY#*/}-${{ github.event.inputs.tagName }}"
         run: |      
-          echo "branchName is : ${{ github.event.inputs.tagName }}"
-          echo "test: ${GITHUB_REPOSITORY#*/}-${tag}"
-          # gh release create "${GITHUB_REPOSITORY#*/}-${tag}" \
+          echo "branchName is : ${PackageName}"
+          echo "test: ${PackageName}"
+          # gh release create "${PackageName}" \
           #   --repo="$GITHUB_REPOSITORY" \
-          #   --title="${GITHUB_REPOSITORY#*/}-${tag}" \
+          #   --title="${PackageName}" \
           #   --generate-notes
 
       # - name: createPackage
