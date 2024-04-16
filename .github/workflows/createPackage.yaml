@@ -40,10 +40,10 @@ jobs:
         id: showBranch
         env: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
+          tag: ${{ github.event.inputs.tagName }}
         run: |      
           echo "branchName is : ${{ github.event.inputs.tagName }}"
-          gh release create "$tag" \
+          gh release create "${GITHUB_REPOSITORY#*/}-${tag}" \
             --repo="$GITHUB_REPOSITORY" \
             --title="${GITHUB_REPOSITORY#*/}-${tag}" \
             --generate-notes
