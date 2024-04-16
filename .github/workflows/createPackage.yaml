@@ -43,10 +43,11 @@ jobs:
           tag: ${{ github.event.inputs.tagName }}
         run: |      
           echo "branchName is : ${{ github.event.inputs.tagName }}"
-          gh release create "${GITHUB_REPOSITORY#*/}-${tag}" \
-            --repo="$GITHUB_REPOSITORY" \
-            --title="${GITHUB_REPOSITORY#*/}-${tag}" \
-            --generate-notes
+          echo "test: ${GITHUB_REPOSITORY#*/}-${tag}"
+          # gh release create "${GITHUB_REPOSITORY#*/}-${tag}" \
+          #   --repo="$GITHUB_REPOSITORY" \
+          #   --title="${GITHUB_REPOSITORY#*/}-${tag}" \
+          #   --generate-notes
 
       # - name: createPackage
       #   id: createPackage
