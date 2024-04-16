@@ -31,10 +31,7 @@ jobs:
         with: 
           fetch-depth: 0
           ref: ${{ github.event.inputs.tagName }}
-        run: | 
-          ls -l
-          pwd
-          
+
       - name: listTag
         run: |      
           git tag -l
@@ -53,3 +50,14 @@ jobs:
         run: | 
           ls -l
           pwd
+
+      - name: Zip directory
+        run: |
+          cd ${{ github.workspace }}
+          zip -r output.zip .
+      
+      - name: Upload zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/output.zip
