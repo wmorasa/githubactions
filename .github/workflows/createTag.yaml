@@ -63,7 +63,7 @@ jobs:
           #tags=$(git tag -l)
           #echo "$tags" 
           git tag -l >> ${LOGFILE}
-          cat ${LOGFILE}
+          # cat ${LOGFILE}
           # cat /tmp/tmp.out | grep "^$" | wc -l 
           TagCount=$(cat ${LOGFILE} | grep "${{steps.getBranchName.outputs.getBranchName}}" | wc -l)
 
@@ -71,8 +71,11 @@ jobs:
 
           if [ ${TagCount} -eq 0 ]
           then
+             echo "No Tags for current branch exists."
              VersionNum=1
           else
+            echo "Previous Tag :"
+            cat ${LOGFILE} | grep "${{steps.getBranchName.outputs.getBranchName}}" | sort | tail -1
             LastVersion=$(cat ${LOGFILE} | grep "${{steps.getBranchName.outputs.getBranchName}}" | sort | tail -1 | cut -f 2 -d"-" | sed 's/^0*//1' )
             VersionNum=$(( $LastVersion + 1))
           fi
