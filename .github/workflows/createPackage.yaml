@@ -49,3 +49,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
         run: | 
           ls -l
+          pwd
