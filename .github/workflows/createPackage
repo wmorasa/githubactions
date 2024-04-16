@@ -43,8 +43,8 @@ jobs:
         run: |      
           echo "branchName is : ${{steps.getBranchName.outputs.getBranchName}}"
 
-      - name: createTag
-        id: createTag
+      - name: createPackage
+        id: createPackage
         env: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
         run: | 
