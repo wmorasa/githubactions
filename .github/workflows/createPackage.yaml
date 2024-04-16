@@ -42,7 +42,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.inputs.tagName }}
         run: |    
-          PackageName="${GITHUB_REPOSITORY#*/}-${tag}"
+          PackageName="${GITHUB_REPOSITORY#*/}"
+          PackageName="${PackageName^^}-${tag}"
           echo "branchName is : ${PackageName}"
           echo "test: ${PackageName}"
           gh release create "${PackageName}" \
