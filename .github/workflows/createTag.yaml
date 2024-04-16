@@ -73,7 +73,7 @@ jobs:
           then
              VersionNum=1
           else
-            LastVersion=$(cat ${LOGFILE} | grep "${{steps.getBranchName.outputs.getBranchName}}" | sort | tail -1 | cut -f 2 -d"-" )
+            LastVersion=$(cat ${LOGFILE} | grep "${{steps.getBranchName.outputs.getBranchName}}" | sort | tail -1 | cut -f 2 -d"-" | sed 's/^0*//1 )
             VersionNum=$(( $LastVersion + 1))
           fi
 
