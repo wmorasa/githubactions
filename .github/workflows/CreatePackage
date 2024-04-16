@@ -1,0 +1,51 @@
+name: CreatePackage
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      tagName:
+        required: true
+        type: string  
+  #    version:
+  #      required: false
+      
+  push:
+    # branches: ['main']
+      
+env:
+  ARTIFACTORY_REGISTRY: https://bpd01artifactory.glideportal.transurban.com.au/artifactory
+  GITHUB_CONTEXT: ${{toJson(github)}}
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  CreateTag:
+    runs-on: ubuntu-latest
+    # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
+    permissions:
+      contents: write
+      packages: write
+ 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+          ref: ${{ github.event.inputs.tag }}
+
+      - name: listTag
+        run: |      
+          git tag -l
+   
+      - name: showBranch
+        id: showBranch
+        env: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |      
+          echo "branchName is : ${{steps.getBranchName.outputs.getBranchName}}"
+
+      - name: createTag
+        id: createTag
+        env: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: | 
+          ls -l
