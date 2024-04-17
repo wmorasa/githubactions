@@ -63,7 +63,7 @@ jobs:
 
       - name: Prepage Artifactory package
         run: |
-          zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }} -x "./${{ env.package_name }}/.git*/" "./${{ env.package_name }}/opsjobs" @
+          zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }} -x "./${{ env.package_name }}/.git*/*" "./${{ env.package_name }}/opsjobs/*" @
           echo
           unzip -l ./${{ env.package_name }}.zip
           echo
