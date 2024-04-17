@@ -26,6 +26,10 @@ jobs:
       packages: write
  
     steps:
+      - name: Setup Environment Variables
+        run: |
+        echo "package_prefix=$( ${{ github.repository }} / cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )" >> $GITHUB_ENV
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with: 
@@ -34,7 +38,7 @@ jobs:
           # Checkout a different branch
           ref: ${{ github.event.inputs.tagName }} 
           # Relative path under $GITHUB_WORKSPACE to place the repository
-          path: ${{ github.repository }}-${{ github.event.inputs.tagName }}
+          path: ${{ env.package_prefix }}-${{ github.event.inputs.tagName }}
 
       - name: ShowRepo
         run: |      
