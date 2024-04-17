@@ -34,10 +34,6 @@ jobs:
           #echo "package_name=$( echo ${{ github.repository }} | cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )-${{ github.event.inputs.tagName }}" >> $GITHUB_ENV
           echo "package_name=${{ env.app_name }}-${{ env.branch_name }}-${{ env.version_num }}" >> $GITHUB_ENV
 
-          echo "app_name : ${{ env.app_name }}"
-          echo "branch_name : ${{ env.branch_name }}"
-          echo "version_num : ${{ env.version_num }}"
-          echo "version_num : ${{ env.package_name }}"
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -50,7 +46,11 @@ jobs:
           path: ${{ env.package_name }}-primary
 
       - name: ShowRepo
-        run: |      
+        run: |
+          echo "app_name : ${{ env.app_name }}"
+          echo "branch_name : ${{ env.branch_name }}"
+          echo "version_num : ${{ env.version_num }}"
+          echo "version_num : ${{ env.package_name }}"
           #git tag -l
           pwd
           ls -l
