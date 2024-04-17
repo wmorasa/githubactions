@@ -55,16 +55,10 @@ jobs:
           #git tag -l
           pwd
           ls -l
-          #cp -rp ./${{ env.package_name }}-primary ./${{ env.package_name }}
-          echo
-          ls -l
-          #rm -rf ./${{ env.package_name }}/.git*
-          #rm -rf ./${{ env.package_name }}/.opsjobs 
           echo
           zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }} -x "./${{ env.package_name }}/.git*" -x "./${{ env.package_name }}/opjobs"
           echo
           ls -l
-          #find . -print
           which perl
           echo
           unzip -l ./${{ env.package_name }}.zip
