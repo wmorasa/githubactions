@@ -29,7 +29,7 @@ jobs:
       - name: Setup Environment Variables
         run: |
           echo ${{ github.repository }} | cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' 
-          echo "package_prefix=$( echo ${{ github.repository }} | cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )" >> $GITHUB_ENV
+          echo "package_name=$( echo ${{ github.repository }} | cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )-${{ github.event.inputs.tagName }}" >> $GITHUB_ENV
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -39,16 +39,16 @@ jobs:
           # Checkout a different branch
           ref: ${{ github.event.inputs.tagName }} 
           # Relative path under $GITHUB_WORKSPACE to place the repository
-          path: ${{ env.package_prefix }}-${{ github.event.inputs.tagName }}
+          path: ${{ env.package_name }}
 
       - name: ShowRepo
         run: |      
           #git tag -l
           pwd
           ls -l
-          rm -rf ${{ github.event.inputs.tagName }}/.git 
-          rm -rf ${{ github.event.inputs.tagName }}/.opsjobs 
-          zip -r ${{ env.package_prefix }}-${{ github.event.inputs.tagName }}.zip ./${{ env.package_prefix }}-${{ github.event.inputs.tagName }}
+          rm -rf ./${{ env.package_name }}/.git 
+          rm -rf ./${{ env.package_name }}/.opsjobs 
+          zip -r ${{ env.package_name }}-${{ github.event.inputs.tagName }}.zip ./${{ env.package_name }}-${{ github.event.inputs.tagName }}
           find . -print
    
       # - name: PackageCreate
