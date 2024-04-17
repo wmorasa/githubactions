@@ -50,7 +50,7 @@ jobs:
           echo "app_name : ${{ env.app_name }}"
           echo "branch_name : ${{ env.branch_name }}"
           echo "version_num : ${{ env.version_num }}"
-          echo "version_num : ${{ env.package_name }}"
+          echo "package_name : ${{ env.package_name }}"
           #git tag -l
           pwd
           ls -l
@@ -59,11 +59,14 @@ jobs:
           ls -l
           rm -rf ./${{ env.package_name }}/.git*
           rm -rf ./${{ env.package_name }}/.opsjobs 
+          echo
           zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }}
           echo
           ls -l
-          find . -print
+          #find . -print
           which perl
+          echo
+          unzip -l ./${{ env.package_name }}.zip
    
       # - name: PackageCreate
       #   id: PackageCreate
