@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Setup Environment Variables
         run: |
-          echo "app_name=$( echo ${{ github.repository }} | cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )">> $GITHUB_ENV
+          echo "app_name=$( echo ${{ github.repository }} | cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )" >> $GITHUB_ENV
           echo "branch_name=$( echo ${{ github.event.inputs.tagName }} | cut -f1 -d'-' )" >> $GITHUB_ENV
           echo "version_num=$( echo ${{ github.event.inputs.tagName }} | cut -f2 -d'-' )" >> $GITHUB_ENV
           #echo "package_name=$( echo ${{ github.repository }} | cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )-${{ github.event.inputs.tagName }}" >> $GITHUB_ENV
