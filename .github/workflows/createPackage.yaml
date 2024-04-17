@@ -38,9 +38,10 @@ jobs:
 
       - name: ShowRepo
         run: |      
-          git tag -l
+          #git tag -l
           pwd
           ls -l  
+          find . -print
    
       # - name: PackageCreate
       #   id: PackageCreate
