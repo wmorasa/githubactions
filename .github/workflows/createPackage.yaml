@@ -32,8 +32,13 @@ jobs:
           echo "branch_name=$( echo ${{ github.event.inputs.tagName }} | cut -f1 -d'-' )" >> $GITHUB_ENV
           echo "version_num=$( echo ${{ github.event.inputs.tagName }} | cut -f2 -d'-' )" >> $GITHUB_ENV
           echo "package_name=$( echo ${{ github.repository }} | cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )-${{ github.event.inputs.tagName }}" >> $GITHUB_ENV
-          #echo "package_name=${{ env.app_name }}-${{ env.branch_name }}-${{ env.version_num }}" >> $GITHUB_ENV
 
+      - name: Show Environment Variables
+        run: |
+          echo "app_name : ${{ env.app_name }}"
+          echo "branch_name : ${{ env.branch_name }}"
+          echo "version_num : ${{ env.version_num }}"
+          echo "package_name : ${{ env.package_name }}"
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -43,31 +48,30 @@ jobs:
           # Checkout a different branch
           ref: ${{ github.event.inputs.tagName }} 
           # Relative path under $GITHUB_WORKSPACE to place the repository
-          path: ${{ env.package_name }}-primary
+          path: ${{ env.package_name }}
 
-      - name: ShowRepo
+      - name: ShowContents
         run: |
-          echo "app_name : ${{ env.app_name }}"
-          echo "branch_name : ${{ env.branch_name }}"
-          echo "version_num : ${{ env.version_num }}"
-          echo "package_name : ${{ env.package_name }}"
           #git tag -l
           pwd
           ls -l
-          cp -rp ./${{ env.package_name }}-primary ./${{ env.package_name }}
+          #cp -rp ./${{ env.package_name }}-primary ./${{ env.package_name }}
           echo
           ls -l
-          rm -rf ./${{ env.package_name }}/.git*
-          rm -rf ./${{ env.package_name }}/.opsjobs 
+          #rm -rf ./${{ env.package_name }}/.git*
+          #rm -rf ./${{ env.package_name }}/.opsjobs 
           echo
-          zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }}
+          zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }} -x "./${{ env.package_name }}/.git*" -x "./${{ env.package_name }}/opjobs"
           echo
           ls -l
           #find . -print
           which perl
           echo
           unzip -l ./${{ env.package_name }}.zip
-   
+
+      - name: ShowRepo
+        run: |
+
       # - name: PackageCreate
       #   id: PackageCreate
       #   env: 
