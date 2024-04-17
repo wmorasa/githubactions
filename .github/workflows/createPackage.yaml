@@ -35,6 +35,8 @@ jobs:
           ref: ${{ github.event.inputs.tagName }} 
           # Relative path under $GITHUB_WORKSPACE to place the repository
           path: ${{ github.event.inputs.tagName }}
+          sparse-checkout: |
+            !.github
 
       - name: ShowRepo
         run: |      
