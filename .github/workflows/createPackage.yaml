@@ -46,10 +46,11 @@ jobs:
           #git tag -l
           pwd
           ls -l
-          rm -rf ./${{ env.package_name }}/.git 
+          rm -rf ./${{ env.package_name }}/.git*
           rm -rf ./${{ env.package_name }}/.opsjobs 
           zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }}
           find . -print
+          which perl
    
       # - name: PackageCreate
       #   id: PackageCreate
