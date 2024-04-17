@@ -35,14 +35,14 @@ jobs:
           ref: ${{ github.event.inputs.tagName }} 
           # Relative path under $GITHUB_WORKSPACE to place the repository
           path: ${{ github.event.inputs.tagName }}
-          sparse-checkout: |
-            !.github
 
       - name: ShowRepo
         run: |      
           #git tag -l
           pwd
-          ls -l  
+          ls -l
+          rm -rf ${{ github.event.inputs.tagName }}/.github 
+          rm -rf ${{ github.event.inputs.tagName }}/.opsjobs 
           find . -print
    
       # - name: PackageCreate
