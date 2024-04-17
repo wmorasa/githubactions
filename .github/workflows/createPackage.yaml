@@ -46,8 +46,9 @@ jobs:
           #git tag -l
           pwd
           ls -l
-          #rm -rf ${{ github.event.inputs.tagName }}/.git 
-          #rm -rf ${{ github.event.inputs.tagName }}/.opsjobs 
+          rm -rf ${{ github.event.inputs.tagName }}/.git 
+          rm -rf ${{ github.event.inputs.tagName }}/.opsjobs 
+          zip -r ${{ env.package_prefix }}-${{ github.event.inputs.tagName }}.zip ./${{ env.package_prefix }}-${{ github.event.inputs.tagName }}
           find . -print
    
       # - name: PackageCreate
