@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Setup Environment Variables
         run: |
-          echo ${{ github.repository }} | cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' 
+          echo $( echo ${{ github.repository }} | cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )-${{ github.event.inputs.tagName }} 
           echo "package_name=$( echo ${{ github.repository }} | cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )-${{ github.event.inputs.tagName }}" >> $GITHUB_ENV
 
       - name: Checkout repository
@@ -39,16 +39,21 @@ jobs:
           # Checkout a different branch
           ref: ${{ github.event.inputs.tagName }} 
           # Relative path under $GITHUB_WORKSPACE to place the repository
-          path: ${{ env.package_name }}
+          path: ${{ env.package_name }}-primary
 
       - name: ShowRepo
         run: |      
           #git tag -l
           pwd
           ls -l
+          cp -rp ./${{ env.package_name }}-primary ./${{ env.package_name }}
+          echo
+          ls -l
           rm -rf ./${{ env.package_name }}/.git*
           rm -rf ./${{ env.package_name }}/.opsjobs 
           zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }}
+          echo
+          ls -l
           find . -print
           which perl
    
