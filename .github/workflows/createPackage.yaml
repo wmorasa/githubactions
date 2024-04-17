@@ -33,12 +33,14 @@ jobs:
           fetch-depth: 0 
           # Checkout a different branch
           ref: ${{ github.event.inputs.tagName }} 
+          # Relative path under $GITHUB_WORKSPACE to place the repository
+          path: '${{ github.event.inputs.tagName }}'
 
       - name: listTag
         run: |      
           git tag -l
           pwd
-          ls -l 
+          ls -l  
    
       # - name: PackageCreate
       #   id: PackageCreate
