@@ -28,6 +28,7 @@ jobs:
     steps:
       - name: Setup Environment Variables
         run: |
+          echo $( ${{ github.repository }} / cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )
           echo "package_prefix=$( ${{ github.repository }} / cut -f2 -d'/' | tr "[:lower:]" "[:upper:]" | sed 's/-/_/g' )" >> $GITHUB_ENV
 
       - name: Checkout repository
