@@ -67,6 +67,12 @@ jobs:
       - name: ShowRepo
         run: |
           unzip -l ./${{ env.package_name }}.zip
+
+      - name: UploadToArtifactory
+        run: |
+          echo "ArtifactoryURL : ${{ env.ARTIFACTORY_REGISTRY }}/${{ env.app_name }}/${{ env.branch_name }}/${{ env.version_num }}"
+
+
       # - name: PackageCreate
       #   id: PackageCreate
       #   env: 
