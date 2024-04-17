@@ -56,16 +56,17 @@ jobs:
           pwd
           ls -l
           echo
+          ls -ld ${{ env.package_name }}/*
+          echo
           zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }} -x "./${{ env.package_name }}/.git*" -x "./${{ env.package_name }}/opjobs"
           echo
           ls -l
           which perl
-          echo
-          unzip -l ./${{ env.package_name }}.zip
+          echo 
 
       - name: ShowRepo
         run: |
-
+          unzip -l ./${{ env.package_name }}.zip
       # - name: PackageCreate
       #   id: PackageCreate
       #   env: 
