@@ -48,7 +48,7 @@ jobs:
           ls -l
           rm -rf ./${{ env.package_name }}/.git 
           rm -rf ./${{ env.package_name }}/.opsjobs 
-          zip -r ${{ env.package_name }}-${{ github.event.inputs.tagName }}.zip ./${{ env.package_name }}-${{ github.event.inputs.tagName }}
+          zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }}
           find . -print
    
       # - name: PackageCreate
