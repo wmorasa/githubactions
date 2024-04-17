@@ -50,23 +50,24 @@ jobs:
           # Relative path under $GITHUB_WORKSPACE to place the repository
           path: ${{ env.package_name }}
 
-      - name: ShowContents
+      - name: Show Repo Contents
         run: |
           #git tag -l
           pwd
           ls -l
           echo
-          ls -la ${{ env.package_name }}
+          find ${{ env.package_name }} -print
           echo
-          zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }} -x "./${{ env.package_name }}/.git*" -x "./${{ env.package_name }}/opjobs"
-          echo
-          ls -l
           which perl
           echo 
 
-      - name: ShowRepo
+      - name: Prepage Artifactory package
         run: |
+          zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }} -x "./${{ env.package_name }}/.git*" -x "./${{ env.package_name }}/opjobs"
+          echo
           unzip -l ./${{ env.package_name }}.zip
+          echo
+          ls -l
 
       - name: UploadToArtifactory
         run: |
