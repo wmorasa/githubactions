@@ -56,7 +56,7 @@ jobs:
           pwd
           ls -l
           echo
-          ls -ld ${{ env.package_name }}/*
+          ls -lda ${{ env.package_name }}/*
           echo
           zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }} -x "./${{ env.package_name }}/.git*" -x "./${{ env.package_name }}/opjobs"
           echo
