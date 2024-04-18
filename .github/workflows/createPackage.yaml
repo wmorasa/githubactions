@@ -63,15 +63,18 @@ jobs:
 
       - name: Prepage Artifactory package
         run: |
-          zip -r ./${{ env.package_name }}.zip ./${{ env.package_name }} -x "./${{ env.package_name }}/.git*/*" "./${{ env.package_name }}/opsjobs/*" @
+          zip -r ./${{ env.package_name }}.ZIP ./${{ env.package_name }} -x "./${{ env.package_name }}/.git*/*" "./${{ env.package_name }}/opsjobs/*" @
           echo
-          unzip -l ./${{ env.package_name }}.zip
+          unzip -l ./${{ env.package_name }}.ZIP
           echo
           ls -l
 
       - name: UploadToArtifactory
         run: |
-          echo "ArtifactoryURL : ${{ env.ARTIFACTORY_REGISTRY }}/${{ env.app_name }}/${{ env.branch_name }}/${{ env.version_num }}"
+          USR="scmartifactory"
+          PWD="Seh63Gt78X"
+          echo "ArtifactoryURL : ${{ env.ARTIFACTORY_REGISTRY }}/TU-DEV/${{ env.app_name }}/${{ env.branch_name }}/${{ env.version_num }}"
+          curl -u '$USR:$PSW' -k -v -X PUT "${{ env.ARTIFACTORY_REGISTRY }}/ZZTU/${{ env.app_name }}/${{ env.branch_name }}/${{ env.version_num }}" -T ./${{ env.package_name }}.ZIP
 
 
       # - name: PackageCreate
