@@ -71,8 +71,6 @@ jobs:
 
       - name: UploadToArtifactory
         run: |
-          #USR="scmartifactory"
-
           echo "ArtifactoryURL : ${{ env.ARTIFACTORY_REGISTRY }}/TU-DEV/${{ env.app_name }}/${{ env.branch_name }}/${{ env.version_num }}"
           curl -k "https://bpd01artifactory.glideportal.transurban.com.au/ui/login/"
           #curl -u '$USR:$PSW' -k -v -X PUT "${{ env.ARTIFACTORY_REGISTRY }}/ZZTU/${{ env.app_name }}/${{ env.branch_name }}/${{ env.version_num }}" -T ./${{ env.package_name }}.ZIP
