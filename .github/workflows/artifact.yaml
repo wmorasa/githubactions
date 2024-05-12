@@ -1,0 +1,21 @@
+# https://www.linkedin.com/learning/learning-github-actions-2/solution-develop-a-workflow-that-creates-an-artifact?autoSkip=true&resume=false&u=2154097
+# chapter 3 
+
+name: Artifact
+
+on: [push]
+
+env:
+  ARTIFACT_NAME: myartifact
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        use: actions/checkout@v2
+      - name: Upload the artifact
+        use: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: /
